@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.Scanner;
 
 public class Main {
@@ -5,22 +6,22 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String input1 = scanner.nextLine();
         String inputString = scanner.nextLine();
-        final int POW_R = 31;
-        final int MOD_M = 1234567891;
+        final BigInteger POW_R = BigInteger.valueOf(31);
+        final BigInteger MOD_M = BigInteger.valueOf(1234567891);
 
         System.out.println(hashFunction(inputString, POW_R, MOD_M));
     }
 
-    private static int hashFunction(String inputString, final int POW_R, final int MOD_M) {
-        int hashValue = 0;
-        int strLength = inputString.length();
+    private static BigInteger hashFunction(String inputString, final BigInteger POW_R, final BigInteger MOD_M) {
+        BigInteger hashValue = BigInteger.ZERO;
+        long strLength = inputString.length();
         char[] chars = inputString.toCharArray();
 
         for (int i = 0; i < strLength; i++) {
-            int num = Character.getNumericValue(chars[i]) - (Character.getNumericValue('a') - 1);
-            hashValue += num * (int) Math.pow(POW_R, i);
+            BigInteger num = BigInteger.valueOf(Character.getNumericValue(chars[i]) - (Character.getNumericValue('a') - 1));
+            hashValue = POW_R.pow(i).multiply(num).add(hashValue);
         }
 
-        return hashValue % MOD_M;
+        return hashValue.mod(MOD_M);
     }
 }
